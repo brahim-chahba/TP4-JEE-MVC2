@@ -62,7 +62,7 @@ public class DispatcherServlet extends HttpServlet {
 		Long id = Long.parseLong(request.getParameter("idProduit"));
 		Produit p = metier.getProduitById(id);
 		request.setAttribute("produitEdit", p);
-		request.setAttribute("listeProduit", metier.getAllProduit());
+		request.setAttribute("listeProduits", metier.getAllProduit());
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 
 	}

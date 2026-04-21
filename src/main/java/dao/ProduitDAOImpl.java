@@ -45,7 +45,7 @@ public class ProduitDAOImpl implements ProduitDAO {
 	public List<Produit> getAllProduit() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			return session.createQuery("FROM produits").list();
+			return session.createQuery("FROM Produit").list();
 		} finally {
 			session.close();
 		}

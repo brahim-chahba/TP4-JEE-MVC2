@@ -6,7 +6,7 @@
 		<property name="connection.url">jdbc:mysql://localhost:3306/gesproduit_db?useSSL=false&amp;serverTimezone=UTC
 		</property>
 		<property name="connection.username">root</property>
-		<property name="connection.password"></property>
+		<property name="connection.password">brahim?</property>
 
 		<!-- Dialecte MySQL -->
 		<property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>

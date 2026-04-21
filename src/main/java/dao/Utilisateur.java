@@ -15,6 +15,13 @@ public class Utilisateur {
 	public Utilisateur() {
 	}
 
+	public Utilisateur(String login, String pass, String role) {
+		// TODO Auto-generated constructor stub
+		this.login = login;
+		this.password = pass;
+		this.role = role;
+	}
+
 	public Long getIdUtilisateur() {
 		return IdUtilisateur;
 	}

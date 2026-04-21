@@ -7,6 +7,17 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class UtilisateurDAOImpl implements UtilisateurDAO {
+
+	public UtilisateurDAOImpl() {
+		insertIfNotExists(new Utilisateur("admin", "1", "ADMIN"));
+		insertIfNotExists(new Utilisateur("user", "1", "USER"));
+	}
+
+	private void insertIfNotExists(Utilisateur u) {
+		if (findByLoginAndPassword(u.getLogin(), u.getPassword()) == null)
+			save(u);
+	}
+
 	@Override
 	public void save(Utilisateur u) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -29,7 +40,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	public Utilisateur findByLoginAndPassword(String login, String password) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			Query<Utilisateur> query = session.createQuery("FROM users WHERE login=:login AND password=:pass",
+			Query<Utilisateur> query = session.createQuery("FROM Utilisateur WHERE login=:login AND password=:pass",
 					Utilisateur.class);
 			query.setParameter("login", login);
 			query.setParameter("pass", password);

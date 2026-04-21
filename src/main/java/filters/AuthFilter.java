@@ -5,8 +5,6 @@ import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,19 +13,17 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class AuthFilter
  */
-public class AuthFilter extends HttpFilter implements Filter {
+public class AuthFilter extends HttpFilter {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4032613782405408071L;
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		HttpServletRequest httpReq = (HttpServletRequest) request;
-		HttpServletResponse httpRes = (HttpServletResponse) response;
-		String requestURI = httpReq.getRequestURI();
+		String requestURI = request.getRequestURI();
 		boolean isPublic = requestURI.contains("/login") || requestURI.contains("/logout");
 		if (isPublic) {
 			chain.doFilter(request, response);
@@ -35,13 +31,13 @@ public class AuthFilter extends HttpFilter implements Filter {
 
 		}
 
-		HttpSession session = httpReq.getSession(false);
+		HttpSession session = request.getSession(false);
 		boolean isLoggedIn = (session != null && session.getAttribute("utilisateur") != null);
 
 		if (isLoggedIn) {
 			chain.doFilter(request, response);
 		} else {
-			httpRes.sendRedirect(httpReq.getContextPath() + "/login");
+			response.sendRedirect(request.getContextPath() + "/login");
 		}
 
 	}

@@ -14,14 +14,19 @@ public class HibernateUtil {
 
 	static {
 		try {
-			// charger configuration
-			Configuration configuration = new Configuration().configure();
-			// cree le registre de service
-			ServiceRegistry serviceRegestry = new StandardServiceRegistryBuilder()
-					.applySettings(configuration.getProperties()).build();
-			// constraction de sessionFactory
-			sessionFactory = configuration.buildSessionFactory(serviceRegestry);
-			System.out.println("Session est cree avec succes .");
+			// Charger configuration et les mappings depuis hibernate.cfg.xml
+			org.hibernate.boot.registry.StandardServiceRegistry standardRegistry = 
+					new org.hibernate.boot.registry.StandardServiceRegistryBuilder()
+					.configure("hibernate.cfg.xml")
+					.build();
+
+			org.hibernate.boot.Metadata metadata = 
+					new org.hibernate.boot.MetadataSources(standardRegistry)
+					.getMetadataBuilder()
+					.build();
+
+			sessionFactory = metadata.getSessionFactoryBuilder().build();
+			System.out.println("Session est creee avec succes.");
 
 		} catch (Exception e) {
 			System.err.println(" Erreur lors de la ceation : " + e.getMessage());
